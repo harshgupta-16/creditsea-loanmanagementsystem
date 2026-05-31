@@ -2,8 +2,9 @@
 
 Full-stack LMS with role-based access. Borrowers apply for loans, executives manage the lifecycle (approve → disburse → collect).
 
-**Live Demo:**  
-- Frontend: https://creditsea-loanmanagementsystem.vercel.app/
+## Live Links
+Live Deployment: https://creditsea-loanmanagementsystem.vercel.app/
+Demo Video: https://drive.google.com/file/d/11aXM44WEb0SdDN26wVOJWo_Hdc_dtASZ/view?usp=sharing
 
 ## Tech Stack
 
@@ -42,5 +43,3 @@ npm run dev                  # starts on :3000
 | Disbursement | disbursement@creditsea.com | Disbursement@123 |
 | Collection | collection@creditsea.com | Collection@123 |
 | Borrower | borrower@creditsea.com | Borrower@123 |
-
-Run `npm run seed` in the backend to create these users.
