@@ -3,7 +3,8 @@
 Full-stack LMS with role-based access. Borrowers apply for loans, executives manage the lifecycle (approve → disburse → collect).
 
 ## Live Links
-Live Deployment: https://creditsea-loanmanagementsystem.vercel.app/
+Live Deployment: https://creditsea-loanmanagementsystem.vercel.app
+
 Demo Video: https://drive.google.com/file/d/11aXM44WEb0SdDN26wVOJWo_Hdc_dtASZ/view?usp=sharing
 
 ## Tech Stack
