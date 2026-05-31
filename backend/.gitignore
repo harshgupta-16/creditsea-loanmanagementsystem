@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# Uploaded files
+uploads/
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+
+# TypeScript
+*.tsbuildinfo
