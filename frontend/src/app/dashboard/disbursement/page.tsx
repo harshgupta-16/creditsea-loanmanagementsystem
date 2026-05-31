@@ -65,21 +65,22 @@ export default function DisbursementModule() {
       )}
 
       {loans.length === 0 ? (
-        <div className="bg-surface-900/50 border border-surface-700/50 rounded-xl p-12 text-center">
+        <div className="glass-panel rounded-2xl p-12 text-center">
+          <div className="text-3xl mb-3">💸</div>
           <p className="text-surface-500">No sanctioned loans pending disbursement.</p>
         </div>
       ) : (
-        <div className="bg-surface-900/50 backdrop-blur-xl border border-surface-700/50 rounded-xl overflow-hidden">
+        <div className="glass-panel rounded-2xl overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-surface-700/50">
-                  <th className="text-left text-xs font-medium text-surface-400 uppercase tracking-wider px-6 py-4">Borrower</th>
-                  <th className="text-left text-xs font-medium text-surface-400 uppercase tracking-wider px-6 py-4">Amount</th>
-                  <th className="text-left text-xs font-medium text-surface-400 uppercase tracking-wider px-6 py-4">Tenure</th>
-                  <th className="text-left text-xs font-medium text-surface-400 uppercase tracking-wider px-6 py-4">Total Repayment</th>
-                  <th className="text-left text-xs font-medium text-surface-400 uppercase tracking-wider px-6 py-4">Sanctioned By</th>
-                  <th className="text-left text-xs font-medium text-surface-400 uppercase tracking-wider px-6 py-4">Action</th>
+                <tr className="border-b border-white/[0.06]">
+                  <th className="text-left text-[10px] font-bold text-surface-500 uppercase tracking-wider px-6 py-4">Borrower</th>
+                  <th className="text-left text-[10px] font-bold text-surface-500 uppercase tracking-wider px-6 py-4">Amount</th>
+                  <th className="text-left text-[10px] font-bold text-surface-500 uppercase tracking-wider px-6 py-4">Tenure</th>
+                  <th className="text-left text-[10px] font-bold text-surface-500 uppercase tracking-wider px-6 py-4">Total Repayment</th>
+                  <th className="text-left text-[10px] font-bold text-surface-500 uppercase tracking-wider px-6 py-4">Sanctioned By</th>
+                  <th className="text-left text-[10px] font-bold text-surface-500 uppercase tracking-wider px-6 py-4">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -87,22 +88,22 @@ export default function DisbursementModule() {
                   const borrower = loan.borrower as any;
                   const sanctionedBy = loan.sanctionedBy as any;
                   return (
-                    <tr key={loan._id} className="border-b border-surface-800/50 hover:bg-surface-800/20 transition-colors">
+                    <tr key={loan._id} className="border-b border-white/[0.04] hover:bg-white/[0.02] transition-colors">
                       <td className="px-6 py-4">
                         <div>
                           <p className="text-sm text-white">{borrower?.fullName || 'N/A'}</p>
-                          <p className="text-xs text-surface-500">{borrower?.email || ''}</p>
+                          <p className="text-[10px] text-surface-500">{borrower?.email || ''}</p>
                         </div>
                       </td>
                       <td className="px-6 py-4 text-sm text-white font-medium">₹{loan.loanAmount.toLocaleString()}</td>
-                      <td className="px-6 py-4 text-sm text-surface-300">{loan.tenure} days</td>
+                      <td className="px-6 py-4 text-sm text-surface-400 font-mono">{loan.tenure} days</td>
                       <td className="px-6 py-4 text-sm text-primary-400 font-medium">₹{loan.totalRepayment.toFixed(2)}</td>
-                      <td className="px-6 py-4 text-sm text-surface-300">{sanctionedBy?.fullName || sanctionedBy?.email || 'N/A'}</td>
+                      <td className="px-6 py-4 text-sm text-surface-400">{sanctionedBy?.fullName || sanctionedBy?.email || 'N/A'}</td>
                       <td className="px-6 py-4">
                         <button
                           onClick={() => handleDisburse(loan._id)}
                           disabled={actionLoading === loan._id}
-                          className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium rounded-lg transition-all disabled:opacity-50 cursor-pointer"
+                          className="px-4 py-2 bg-purple-500/15 hover:bg-purple-500/25 text-purple-400 border border-purple-500/20 text-xs font-semibold rounded-xl transition-all disabled:opacity-50 cursor-pointer"
                         >
                           {actionLoading === loan._id ? 'Processing...' : 'Disburse'}
                         </button>

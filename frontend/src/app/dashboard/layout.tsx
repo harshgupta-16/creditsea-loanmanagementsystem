@@ -41,28 +41,35 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const filteredNav = navItems.filter((item) => item.roles.includes(user.role));
 
   return (
-    <div className="min-h-screen bg-surface-950 flex">
+    <div className="min-h-screen bg-surface-950 flex relative overflow-hidden">
+      {/* Mesh background */}
+      <div className="absolute inset-0 mesh-bg pointer-events-none" />
+      <div className="absolute inset-0 dot-pattern pointer-events-none opacity-40" />
+
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
-        <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />
       )}
 
       {/* Sidebar */}
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-surface-900/80 backdrop-blur-xl border-r border-surface-700/50 transform transition-transform duration-300 lg:translate-x-0 ${
+        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-surface-950/90 backdrop-blur-xl border-r border-white/[0.06] transform transition-transform duration-300 lg:translate-x-0 ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="flex items-center gap-2 px-6 h-16 border-b border-surface-700/50">
-          <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
-            <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        {/* Brand */}
+        <div className="flex items-center gap-3 px-5 h-16 border-b border-white/[0.06]">
+          <div className="w-8 h-8 bg-gradient-to-br from-primary-400 to-accent-500 rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+            <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
           </div>
-          <span className="font-bold text-white">CreditSea</span>
+          <span className="font-bold text-white text-sm tracking-tight">CreditSea</span>
+          <span className="ml-auto text-[9px] bg-primary-500/20 text-primary-400 px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider">Pro</span>
         </div>
 
-        <nav className="p-4 space-y-1">
+        {/* Nav items */}
+        <nav className="p-3 space-y-0.5 mt-2">
           {filteredNav.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -70,13 +77,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 key={item.href}
                 href={item.href}
                 onClick={() => setSidebarOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
                   isActive
-                    ? 'bg-primary-600/20 text-primary-400 border border-primary-500/20'
-                    : 'text-surface-400 hover:text-white hover:bg-surface-800/50'
+                    ? 'bg-primary-500/10 text-primary-400 shadow-[inset_2px_0_0_0_rgb(16,185,129)]'
+                    : 'text-surface-400 hover:text-white hover:bg-white/[0.04]'
                 }`}
               >
-                <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className={`w-[18px] h-[18px] flex-shrink-0 ${isActive ? 'text-primary-400' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={item.icon} />
                 </svg>
                 {item.label}
@@ -85,22 +92,22 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           })}
         </nav>
 
-        {/* User info */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-surface-700/50">
-          <div className="flex items-center gap-3 px-2">
-            <div className="w-8 h-8 bg-primary-600/20 rounded-full flex items-center justify-center">
+        {/* User info at bottom */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-white/[0.06]">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 bg-gradient-to-br from-primary-500/20 to-accent-500/20 rounded-xl flex items-center justify-center border border-white/[0.08]">
               <span className="text-primary-400 font-bold text-xs">{user.fullName?.[0] || user.email[0].toUpperCase()}</span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm text-white truncate">{user.fullName || user.email}</p>
-              <p className="text-xs text-surface-500 capitalize">{user.role}</p>
+              <p className="text-sm text-white truncate font-medium">{user.fullName || user.email}</p>
+              <p className="text-[10px] text-surface-500 capitalize tracking-wider font-semibold">{user.role}</p>
             </div>
             <button
               onClick={logout}
-              className="text-surface-500 hover:text-danger-500 transition-colors cursor-pointer"
+              className="text-surface-500 hover:text-danger-500 transition-colors cursor-pointer p-1 rounded-lg hover:bg-danger-500/10"
               title="Logout"
             >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
               </svg>
             </button>
@@ -109,20 +116,25 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </aside>
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col min-h-screen">
+      <div className="flex-1 flex flex-col min-h-screen relative z-10">
         {/* Top bar */}
-        <header className="bg-surface-900/50 backdrop-blur-xl border-b border-surface-700/50 h-16 flex items-center px-4 lg:px-6 sticky top-0 z-30">
+        <header className="bg-surface-950/50 backdrop-blur-xl border-b border-white/[0.06] h-14 flex items-center px-4 lg:px-6 sticky top-0 z-30">
           <button
             onClick={() => setSidebarOpen(true)}
             className="lg:hidden text-surface-400 hover:text-white mr-4 cursor-pointer"
           >
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
-          <h1 className="text-lg font-semibold text-white capitalize">
+          <h1 className="text-sm font-semibold text-white capitalize tracking-tight">
             {pathname === '/dashboard' ? 'Overview' : pathname.split('/').pop()}
           </h1>
+          <div className="ml-auto flex items-center gap-2">
+            <span className="text-[10px] text-surface-500 font-mono hidden sm:block">
+              {new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+            </span>
+          </div>
         </header>
 
         {/* Content */}

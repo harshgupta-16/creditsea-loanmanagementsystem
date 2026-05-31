@@ -70,7 +70,7 @@ export default function SanctionModule() {
     <div>
       <div className="mb-6">
         <h2 className="text-xl font-bold text-white">Sanction — Review Applications</h2>
-        <p className="text-surface-400 text-sm mt-1">Approve or reject applied loan requests</p>
+        <p className="text-surface-500 text-sm mt-1">Approve or reject applied loan requests</p>
       </div>
 
       {message.text && (
@@ -84,7 +84,8 @@ export default function SanctionModule() {
       )}
 
       {loans.length === 0 ? (
-        <div className="bg-surface-900/50 border border-surface-700/50 rounded-xl p-12 text-center">
+        <div className="glass-panel rounded-2xl p-12 text-center">
+          <div className="text-3xl mb-3">✅</div>
           <p className="text-surface-500">No pending loan applications to review.</p>
         </div>
       ) : (
@@ -94,7 +95,7 @@ export default function SanctionModule() {
             return (
               <div
                 key={loan._id}
-                className="bg-surface-900/50 backdrop-blur-xl border border-surface-700/50 rounded-xl p-6 hover:border-surface-600/50 transition-all"
+                className="glass-panel-hover rounded-2xl p-6"
               >
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div className="space-y-2">
@@ -121,14 +122,14 @@ export default function SanctionModule() {
                     <button
                       onClick={() => handleSanction(loan._id)}
                       disabled={actionLoading === loan._id}
-                      className="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium rounded-lg transition-all disabled:opacity-50 cursor-pointer"
+                      className="px-5 py-2 bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/20 text-sm font-semibold rounded-xl transition-all disabled:opacity-50 cursor-pointer"
                     >
                       {actionLoading === loan._id ? '...' : 'Approve'}
                     </button>
                     <button
                       onClick={() => setRejectModal({ open: true, loanId: loan._id })}
                       disabled={actionLoading === loan._id}
-                      className="px-5 py-2 bg-danger-600 hover:bg-danger-500 text-white text-sm font-medium rounded-lg transition-all disabled:opacity-50 cursor-pointer"
+                      className="px-5 py-2 bg-danger-500/15 hover:bg-danger-500/25 text-danger-400 border border-danger-500/20 text-sm font-semibold rounded-xl transition-all disabled:opacity-50 cursor-pointer"
                     >
                       Reject
                     </button>
@@ -142,15 +143,15 @@ export default function SanctionModule() {
 
       {/* Reject Modal */}
       {rejectModal.open && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 px-4">
-          <div className="bg-surface-900 border border-surface-700 rounded-2xl p-6 max-w-md w-full">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 px-4">
+          <div className="glass-panel rounded-2xl p-6 max-w-md w-full">
             <h3 className="text-lg font-bold text-white mb-4">Reject Loan</h3>
             <textarea
               value={rejectReason}
               onChange={(e) => setRejectReason(e.target.value)}
               placeholder="Enter rejection reason..."
               rows={3}
-              className="w-full px-4 py-3 bg-surface-800/50 border border-surface-600/50 rounded-xl text-white placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 resize-none"
+              className="w-full px-4 py-3 glass-input resize-none"
             />
             <div className="flex gap-3 mt-4">
               <button

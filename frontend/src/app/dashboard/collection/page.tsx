@@ -108,7 +108,8 @@ export default function CollectionModule() {
       )}
 
       {loans.length === 0 ? (
-        <div className="bg-surface-900/50 border border-surface-700/50 rounded-xl p-12 text-center">
+        <div className="glass-panel rounded-2xl p-12 text-center">
+          <div className="text-3xl mb-3">📋</div>
           <p className="text-surface-500">No disbursed or closed loans found.</p>
         </div>
       ) : (
@@ -119,33 +120,33 @@ export default function CollectionModule() {
             const progress = loan.totalRepayment > 0 ? (loan.totalPaid / loan.totalRepayment) * 100 : 0;
 
             return (
-              <div key={loan._id} className="bg-surface-900/50 backdrop-blur-xl border border-surface-700/50 rounded-xl overflow-hidden">
+              <div key={loan._id} className="glass-panel rounded-2xl overflow-hidden transition-all duration-300">
                 {/* Loan Row */}
                 <button
                   onClick={() => handleSelectLoan(loan._id)}
-                  className="w-full p-6 text-left hover:bg-surface-800/20 transition-colors cursor-pointer"
+                  className="w-full p-6 text-left hover:bg-white/[0.02] transition-colors cursor-pointer"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
                       <div>
-                        <p className="text-white font-bold">₹{loan.loanAmount.toLocaleString()}</p>
+                        <p className="text-white font-bold text-lg">₹{loan.loanAmount.toLocaleString()}</p>
                         <p className="text-sm text-surface-400">{borrower?.fullName || borrower?.email}</p>
                       </div>
-                      <span className={`px-3 py-0.5 text-xs font-medium rounded-full border ${
+                      <span className={`px-3 py-1 text-[10px] font-bold tracking-wider rounded-full border ${
                         loan.status === 'closed'
-                          ? 'bg-gray-500/10 text-gray-400 border-gray-500/30'
-                          : 'bg-purple-500/10 text-purple-400 border-purple-500/30'
+                          ? 'bg-gray-500/10 text-gray-400 border-gray-500/20'
+                          : 'bg-purple-500/10 text-purple-400 border-purple-500/20'
                       }`}>
                         {loan.status.toUpperCase()}
                       </span>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm text-surface-400">
-                        ₹{loan.totalPaid.toFixed(2)} / ₹{loan.totalRepayment.toFixed(2)}
+                      <p className="text-sm text-surface-400 mb-1">
+                        <span className="text-white font-medium">₹{loan.totalPaid.toFixed(2)}</span> / ₹{loan.totalRepayment.toFixed(2)}
                       </p>
-                      <div className="w-40 bg-surface-700 rounded-full h-1.5 mt-1">
+                      <div className="w-40 bg-surface-950/50 rounded-full h-1.5 mt-1 border border-white/[0.04] overflow-hidden">
                         <div
-                          className={`h-1.5 rounded-full transition-all ${
+                          className={`h-1.5 rounded-full transition-all duration-500 ${
                             loan.status === 'closed' ? 'bg-emerald-500' : 'bg-primary-500'
                           }`}
                           style={{ width: `${Math.min(100, progress)}%` }}
@@ -165,11 +166,11 @@ export default function CollectionModule() {
 
                 {/* Expanded Section */}
                 {isSelected && (
-                  <div className="border-t border-surface-700/50 p-6">
+                  <div className="border-t border-white/[0.06] p-6 bg-surface-950/20">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                       {/* Payment Form */}
                       {loan.status === 'disbursed' && (
-                        <div className="bg-surface-800/30 rounded-xl p-5">
+                        <div className="bg-white/[0.02] border border-white/[0.04] rounded-2xl p-5">
                           <h4 className="text-sm font-medium text-white mb-4">Record Payment</h4>
                           <form onSubmit={handleRecordPayment} className="space-y-3">
                             <input
@@ -178,7 +179,7 @@ export default function CollectionModule() {
                               onChange={(e) => setUtrNumber(e.target.value)}
                               required
                               placeholder="UTR Number"
-                              className="w-full px-3 py-2 bg-surface-800/50 border border-surface-600/50 rounded-lg text-white text-sm placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50"
+                              className="glass-input py-2.5"
                             />
                             <input
                               type="number"
@@ -187,19 +188,19 @@ export default function CollectionModule() {
                               required
                               min={1}
                               placeholder="Amount (₹)"
-                              className="w-full px-3 py-2 bg-surface-800/50 border border-surface-600/50 rounded-lg text-white text-sm placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50"
+                              className="glass-input py-2.5"
                             />
                             <input
                               type="date"
                               value={paymentDate}
                               onChange={(e) => setPaymentDate(e.target.value)}
                               required
-                              className="w-full px-3 py-2 bg-surface-800/50 border border-surface-600/50 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/50"
+                              className="glass-input py-2.5"
                             />
                             <button
                               type="submit"
                               disabled={submitting}
-                              className="w-full py-2 bg-primary-600 hover:bg-primary-500 text-white text-sm font-medium rounded-lg transition-all disabled:opacity-50 cursor-pointer"
+                              className="w-full py-2.5 glass-button text-sm font-semibold rounded-xl mt-2"
                             >
                               {submitting ? 'Recording...' : 'Record Payment'}
                             </button>
@@ -226,17 +227,17 @@ export default function CollectionModule() {
                         ) : payments.length === 0 ? (
                           <p className="text-surface-500 text-sm">No payments recorded yet.</p>
                         ) : (
-                          <div className="space-y-2 max-h-60 overflow-y-auto">
+                          <div className="space-y-2 max-h-60 overflow-y-auto pr-2">
                             {payments.map((payment) => (
                               <div
                                 key={payment._id}
-                                className="flex items-center justify-between bg-surface-800/30 rounded-lg px-4 py-3"
+                                className="flex items-center justify-between bg-white/[0.02] border border-white/[0.04] rounded-xl px-4 py-3 hover:bg-white/[0.04] transition-colors"
                               >
                                 <div>
                                   <p className="text-sm text-white font-medium">₹{payment.amount.toLocaleString()}</p>
-                                  <p className="text-xs text-surface-500">UTR: {payment.utrNumber}</p>
+                                  <p className="text-[10px] text-surface-500 font-mono mt-0.5">UTR: {payment.utrNumber}</p>
                                 </div>
-                                <p className="text-xs text-surface-400">{new Date(payment.date).toLocaleDateString()}</p>
+                                <p className="text-[10px] text-surface-400 uppercase tracking-wider">{new Date(payment.date).toLocaleDateString()}</p>
                               </div>
                             ))}
                           </div>

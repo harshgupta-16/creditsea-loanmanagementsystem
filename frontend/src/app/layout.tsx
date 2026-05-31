@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 
-const inter = Inter({
+const outfit = Outfit({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
-  title: "CreditSea - Loan Management System",
+  title: "CreditSea - Premium Loan Management",
   description: "A modern lending platform for borrowers and operations teams to manage loans end-to-end.",
 };
 
@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.variable} font-sans`}>
+      <body className={`${outfit.variable} font-sans antialiased selection:bg-primary-500/30`}>
         <AuthProvider>
           {children}
         </AuthProvider>

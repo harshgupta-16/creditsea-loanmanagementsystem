@@ -5,6 +5,15 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 
+const DEMO_CREDS = [
+  { label: 'Admin', email: 'admin@creditsea.com', pass: 'Admin@123', icon: '🛡️' },
+  { label: 'Sales', email: 'sales@creditsea.com', pass: 'Sales@123', icon: '📊' },
+  { label: 'Sanction', email: 'sanction@creditsea.com', pass: 'Sanction@123', icon: '✅' },
+  { label: 'Disbursement', email: 'disbursement@creditsea.com', pass: 'Disbursement@123', icon: '💰' },
+  { label: 'Collection', email: 'collection@creditsea.com', pass: 'Collection@123', icon: '📋' },
+  { label: 'Borrower', email: 'borrower@creditsea.com', pass: 'Borrower@123', icon: '👤' },
+];
+
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -30,38 +39,45 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-surface-950 px-4">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-600/20 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-primary-400/10 rounded-full blur-3xl" />
+    <div className="min-h-screen flex items-center justify-center bg-surface-950 px-4 relative overflow-hidden mesh-bg">
+      {/* Animated background orbs */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-primary-500/15 rounded-full blur-[120px] animate-blob" />
+        <div className="absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-accent-500/15 rounded-full blur-[120px] animate-blob" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary-800/8 rounded-full blur-[100px] animate-blob" style={{ animationDelay: '4s' }} />
       </div>
 
-      <div className="w-full max-w-md relative">
+      {/* Dot pattern overlay */}
+      <div className="absolute inset-0 dot-pattern pointer-events-none" />
+
+      <div className="w-full max-w-[540px] relative z-10">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 mb-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center">
+          <div className="inline-flex items-center gap-3 mb-3">
+            <div className="w-12 h-12 bg-gradient-to-br from-primary-400 to-accent-500 rounded-2xl flex items-center justify-center animate-glow">
               <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <h1 className="text-2xl font-bold text-white">CreditSea</h1>
+            <h1 className="text-3xl font-bold text-white tracking-tight">CreditSea</h1>
           </div>
-          <p className="text-surface-400">Sign in to your account</p>
+          <p className="text-surface-400 text-sm">Secure access to your financial dashboard</p>
         </div>
 
         {/* Form Card */}
-        <div className="bg-surface-900/50 backdrop-blur-xl border border-surface-700/50 rounded-2xl p-8 shadow-2xl">
-          <form onSubmit={handleSubmit} className="space-y-5">
+        <div className="glass-panel rounded-2xl p-6 mb-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="bg-danger-500/10 border border-danger-500/30 text-danger-500 px-4 py-3 rounded-xl text-sm">
-                {error}
+              <div className="bg-danger-500/10 border border-danger-500/20 text-danger-400 px-4 py-3 rounded-xl text-sm flex items-center gap-2">
+                <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{error}</span>
               </div>
             )}
 
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-surface-300 mb-2">
+            <div className="space-y-1.5">
+              <label htmlFor="email" className="block text-xs font-semibold text-surface-400 uppercase tracking-wider pl-1">
                 Email address
               </label>
               <input
@@ -70,13 +86,13 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-3 bg-surface-800/50 border border-surface-600/50 rounded-xl text-white placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 transition-all"
-                placeholder="you@example.com"
+                className="glass-input"
+                placeholder="name@company.com"
               />
             </div>
 
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-surface-300 mb-2">
+            <div className="space-y-1.5">
+              <label htmlFor="password" className="block text-xs font-semibold text-surface-400 uppercase tracking-wider pl-1">
                 Password
               </label>
               <div className="relative">
@@ -86,13 +102,13 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full pl-4 pr-12 py-3 bg-surface-800/50 border border-surface-600/50 rounded-xl text-white placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 transition-all"
+                  className="glass-input pr-12"
                   placeholder="••••••••"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-surface-400 hover:text-white transition-colors cursor-pointer p-1"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-surface-500 hover:text-primary-400 transition-colors p-1 cursor-pointer"
                 >
                   {showPassword ? (
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -111,39 +127,54 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white font-semibold rounded-xl shadow-lg shadow-primary-500/25 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+              className="w-full py-3 px-4 glass-button rounded-xl mt-1"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Signing in...
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Authenticating...
                 </span>
               ) : (
-                'Sign In'
+                'Sign In →'
               )}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-surface-400 text-sm">
-              Don&apos;t have an account?{' '}
-              <Link href="/register" className="text-primary-400 hover:text-primary-300 font-medium transition-colors">
-                Create one
+          <div className="mt-4 text-center">
+            <p className="text-surface-500 text-sm">
+              New to CreditSea?{' '}
+              <Link href="/register" className="text-primary-400 hover:text-primary-300 font-semibold transition-colors underline underline-offset-4 decoration-primary-400/30 hover:decoration-primary-400">
+                Create account
               </Link>
             </p>
           </div>
         </div>
 
-        {/* Demo Credentials */}
-        <div className="mt-6 bg-surface-900/30 backdrop-blur border border-surface-700/30 rounded-xl p-4">
-          <p className="text-xs text-surface-500 font-medium mb-2 uppercase tracking-wider">Demo Credentials</p>
-          <div className="grid grid-cols-2 gap-1 text-xs text-surface-400">
-            <span>admin@creditsea.com</span><span>Admin@123</span>
-            <span>sales@creditsea.com</span><span>Sales@123</span>
-            <span>sanction@creditsea.com</span><span>Sanction@123</span>
-            <span>disbursement@creditsea.com</span><span>Disbursement@123</span>
-            <span>collection@creditsea.com</span><span>Collection@123</span>
-            <span>borrower@creditsea.com</span><span>Borrower@123</span>
+        {/* Demo Credentials — 3-column grid */}
+        <div className="glass-panel rounded-2xl p-4">
+          <p className="text-[10px] text-surface-500 font-bold mb-3 tracking-[0.25em] uppercase flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
+            Quick Access — Demo Accounts
+          </p>
+          <div className="grid grid-cols-3 gap-2">
+            {DEMO_CREDS.map((creds) => (
+              <button
+                key={creds.email}
+                type="button"
+                className="group text-left cursor-pointer glass-panel-hover rounded-xl p-3"
+                onClick={() => {
+                  setEmail(creds.email);
+                  setPassword(creds.pass);
+                }}
+              >
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="text-sm">{creds.icon}</span>
+                  <span className="text-white font-semibold text-xs group-hover:text-primary-400 transition-colors">{creds.label}</span>
+                </div>
+                <p className="text-surface-500 text-[10px] truncate leading-relaxed">{creds.email}</p>
+                <p className="text-surface-600 text-[10px] font-mono">{creds.pass}</p>
+              </button>
+            ))}
           </div>
         </div>
       </div>

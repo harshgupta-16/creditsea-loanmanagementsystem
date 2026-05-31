@@ -148,28 +148,30 @@ export default function ApplyPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-surface-950">
+    <div className="min-h-screen bg-surface-950 relative overflow-x-hidden mesh-bg">
+      <div className="absolute inset-0 dot-pattern pointer-events-none opacity-40" />
+
       {/* Header */}
-      <header className="bg-surface-900/80 backdrop-blur-xl border-b border-surface-700/50 sticky top-0 z-50">
-        <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+      <header className="bg-surface-950/80 backdrop-blur-xl border-b border-white/[0.06] sticky top-0 z-50">
+        <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-linear-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
-              <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="w-8 h-8 bg-gradient-to-br from-primary-400 to-accent-500 rounded-lg flex items-center justify-center">
+              <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <span className="font-bold text-white">CreditSea</span>
+            <span className="font-bold text-white text-sm">CreditSea</span>
           </div>
           <div className="flex items-center gap-4">
             <button
               onClick={() => router.push('/my-loans')}
-              className="text-sm text-surface-400 hover:text-white transition-colors cursor-pointer"
+              className="text-xs text-surface-400 hover:text-white transition-colors cursor-pointer font-medium"
             >
               My Loans
             </button>
             <button
               onClick={logout}
-              className="text-sm text-surface-400 hover:text-danger-500 transition-colors cursor-pointer"
+              className="text-xs text-surface-400 hover:text-danger-500 transition-colors cursor-pointer font-medium"
             >
               Logout
             </button>
@@ -177,7 +179,7 @@ export default function ApplyPage() {
         </div>
       </header>
 
-      <div className="max-w-3xl mx-auto px-4 py-8">
+      <div className="max-w-3xl mx-auto px-4 py-8 relative z-10">
         {/* Step Indicator */}
         <div className="flex items-center justify-center mb-10">
           {steps.map((step, index) => (
@@ -231,7 +233,7 @@ export default function ApplyPage() {
 
         {/* Step 1: Personal Details */}
         {currentStep === 1 && (
-          <div className="bg-surface-900/50 backdrop-blur-xl border border-surface-700/50 rounded-2xl p-8 shadow-2xl">
+          <div className="glass-panel rounded-2xl p-6">
             <h2 className="text-xl font-bold text-white mb-6">Personal Details</h2>
             <form onSubmit={handleProfileSubmit} className="space-y-5">
               <div>
@@ -242,7 +244,7 @@ export default function ApplyPage() {
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   required
-                  className="w-full px-4 py-3 bg-surface-800/50 border border-surface-600/50 rounded-xl text-white placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 transition-all"
+                  className="glass-input"
                   placeholder="Enter your full name"
                 />
               </div>
@@ -256,7 +258,7 @@ export default function ApplyPage() {
                   onChange={(e) => setPan(e.target.value.toUpperCase())}
                   required
                   maxLength={10}
-                  className="w-full px-4 py-3 bg-surface-800/50 border border-surface-600/50 rounded-xl text-white placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 transition-all uppercase"
+                  className="glass-input uppercase"
                   placeholder="ABCDE1234F"
                 />
               </div>
@@ -269,7 +271,7 @@ export default function ApplyPage() {
                   value={dateOfBirth}
                   onChange={(e) => setDateOfBirth(e.target.value)}
                   required
-                  className="w-full px-4 py-3 bg-surface-800/50 border border-surface-600/50 rounded-xl text-white placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 transition-all"
+                  className="glass-input"
                 />
               </div>
 
@@ -282,7 +284,7 @@ export default function ApplyPage() {
                   onChange={(e) => setMonthlySalary(e.target.value)}
                   required
                   min={0}
-                  className="w-full px-4 py-3 bg-surface-800/50 border border-surface-600/50 rounded-xl text-white placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 transition-all"
+                  className="glass-input"
                   placeholder="Enter monthly salary"
                 />
               </div>
@@ -294,7 +296,7 @@ export default function ApplyPage() {
                   value={employmentMode}
                   onChange={(e) => setEmploymentMode(e.target.value)}
                   required
-                  className="w-full px-4 py-3 bg-surface-800/50 border border-surface-600/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 transition-all"
+                  className="glass-input"
                 >
                   <option value="">Select employment mode</option>
                   <option value="salaried">Salaried</option>
@@ -306,7 +308,7 @@ export default function ApplyPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-3 px-4 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white font-semibold rounded-xl shadow-lg shadow-primary-500/25 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                className="w-full py-3.5 px-4 glass-button rounded-xl mt-4"
               >
                 {submitting ? 'Checking Eligibility...' : 'Check Eligibility & Continue'}
               </button>
@@ -316,7 +318,7 @@ export default function ApplyPage() {
 
         {/* Step 2: Upload Salary Slip */}
         {currentStep === 2 && (
-          <div className="bg-surface-900/50 backdrop-blur-xl border border-surface-700/50 rounded-2xl p-8 shadow-2xl">
+          <div className="glass-panel rounded-2xl p-6">
             <h2 className="text-xl font-bold text-white mb-6">Upload Salary Slip</h2>
             <form onSubmit={handleFileUpload} className="space-y-6">
               <div
@@ -354,7 +356,7 @@ export default function ApplyPage() {
                 <button
                   type="submit"
                   disabled={!file || submitting}
-                  className="flex-1 py-3 px-4 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white font-semibold rounded-xl shadow-lg shadow-primary-500/25 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                  className="flex-1 py-3.5 px-4 glass-button rounded-xl"
                 >
                   {submitting ? 'Uploading...' : 'Upload & Continue'}
                 </button>
@@ -365,7 +367,7 @@ export default function ApplyPage() {
 
         {/* Step 3: Loan Configuration */}
         {currentStep === 3 && (
-          <div className="bg-surface-900/50 backdrop-blur-xl border border-surface-700/50 rounded-2xl p-8 shadow-2xl">
+          <div className="glass-panel rounded-2xl p-6">
             <h2 className="text-xl font-bold text-white mb-6">Loan Configuration</h2>
 
             <div className="space-y-8">
@@ -455,7 +457,7 @@ export default function ApplyPage() {
                 <button
                   onClick={handleApply}
                   disabled={submitting}
-                  className="flex-1 py-3 px-4 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white font-semibold rounded-xl shadow-lg shadow-primary-500/25 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                  className="flex-1 py-3.5 px-4 glass-button rounded-xl"
                 >
                   {submitting ? 'Submitting...' : 'Apply for Loan'}
                 </button>

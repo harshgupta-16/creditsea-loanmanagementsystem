@@ -43,17 +43,17 @@ export default function SalesModule() {
       <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
         <div>
           <h2 className="text-xl font-bold text-white">Sales — Lead Tracking</h2>
-          <p className="text-surface-400 text-sm mt-1">Registered users and their application status</p>
+          <p className="text-surface-500 text-sm mt-1">Registered users and their application status</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-1.5 bg-surface-900/50 p-1 rounded-xl border border-white/[0.06]">
           {(['all', 'no-loan', 'has-loan'] as const).map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer ${
+              className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                 filter === f
-                  ? 'bg-primary-600/20 text-primary-400 border border-primary-500/30'
-                  : 'bg-surface-800/50 text-surface-400 border border-surface-700/50 hover:text-white'
+                  ? 'bg-primary-500/15 text-primary-400 shadow-sm'
+                  : 'text-surface-400 hover:text-white'
               }`}
             >
               {f === 'all' ? 'All' : f === 'no-loan' ? 'No Loan' : 'Has Loan'}
@@ -62,34 +62,34 @@ export default function SalesModule() {
         </div>
       </div>
 
-      <div className="bg-surface-900/50 backdrop-blur-xl border border-surface-700/50 rounded-xl overflow-hidden">
+      <div className="glass-panel rounded-2xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-surface-700/50">
-                <th className="text-left text-xs font-medium text-surface-400 uppercase tracking-wider px-6 py-4">Name</th>
-                <th className="text-left text-xs font-medium text-surface-400 uppercase tracking-wider px-6 py-4">Email</th>
-                <th className="text-left text-xs font-medium text-surface-400 uppercase tracking-wider px-6 py-4">Profile</th>
-                <th className="text-left text-xs font-medium text-surface-400 uppercase tracking-wider px-6 py-4">Loans</th>
-                <th className="text-left text-xs font-medium text-surface-400 uppercase tracking-wider px-6 py-4">Registered</th>
+              <tr className="border-b border-white/[0.06]">
+                <th className="text-left text-[10px] font-bold text-surface-500 uppercase tracking-wider px-6 py-4">Name</th>
+                <th className="text-left text-[10px] font-bold text-surface-500 uppercase tracking-wider px-6 py-4">Email</th>
+                <th className="text-left text-[10px] font-bold text-surface-500 uppercase tracking-wider px-6 py-4">Profile</th>
+                <th className="text-left text-[10px] font-bold text-surface-500 uppercase tracking-wider px-6 py-4">Loans</th>
+                <th className="text-left text-[10px] font-bold text-surface-500 uppercase tracking-wider px-6 py-4">Registered</th>
               </tr>
             </thead>
             <tbody>
               {filteredLeads.map((lead) => (
-                <tr key={lead.id} className="border-b border-surface-800/50 hover:bg-surface-800/20 transition-colors">
-                  <td className="px-6 py-4 text-sm text-white">{lead.fullName}</td>
-                  <td className="px-6 py-4 text-sm text-surface-300">{lead.email}</td>
+                <tr key={lead.id} className="border-b border-white/[0.04] hover:bg-white/[0.02] transition-colors">
+                  <td className="px-6 py-4 text-sm text-white font-medium">{lead.fullName}</td>
+                  <td className="px-6 py-4 text-sm text-surface-400">{lead.email}</td>
                   <td className="px-6 py-4">
-                    <span className={`px-2 py-1 text-xs rounded-full ${
+                    <span className={`px-2.5 py-1 text-[10px] font-semibold rounded-full border ${
                       lead.profileComplete
-                        ? 'bg-emerald-500/10 text-emerald-400'
-                        : 'bg-yellow-500/10 text-yellow-400'
+                        ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                        : 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20'
                     }`}>
-                      {lead.profileComplete ? 'Complete' : 'Incomplete'}
+                      {lead.profileComplete ? '✓ Complete' : '⏳ Incomplete'}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-sm text-surface-300">{lead.loanCount}</td>
-                  <td className="px-6 py-4 text-sm text-surface-400">{new Date(lead.createdAt).toLocaleDateString()}</td>
+                  <td className="px-6 py-4 text-sm text-surface-300 font-mono">{lead.loanCount}</td>
+                  <td className="px-6 py-4 text-sm text-surface-500">{new Date(lead.createdAt).toLocaleDateString()}</td>
                 </tr>
               ))}
               {filteredLeads.length === 0 && (
